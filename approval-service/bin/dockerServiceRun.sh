@@ -16,5 +16,6 @@ echo Starting ${service_name} Docker image for ${TEAM} from ${project_dir} on Po
 
 docker run -p ${APPROVAL_SERVICE_PORT}:8092 \
 --link team6-${message_service}:${message_service}   \
+--env MESSAGING_SERVICE="10.162.231.12:2181" \
 --name "${TEAM}-${service_name}" \
 -d ${TEAM}/${service_name}

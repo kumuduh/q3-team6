@@ -18,14 +18,16 @@ echo Starting ${service_name} Docker image for ${TEAM} from ${project_dir} on Po
 #for OSX
 LOCAL_IP=`ipconfig getifaddr en0`
 #for other
+NETWORK_INTERFACE="ens33"
 if [ -z ${LOCAL_IP} ]; then LOCAL_IP=`ip -f inet -o addr show ${NETWORK_INTERFACE}|cut -d\  -f 7 | cut -d/ -f 1`;fi
 
 echo ${LOCAL_IP}
 
 docker run --link team6-${message_service}:${message_service}  \
  --env ADVERTISED_HOST=${LOCAL_IP} \
+ --env MESSAGING_SERVICE="10.162.231.12:2181" \
  -p ${SERVER_SERVICE_PORT}:${default_port} \
---name "${TEAM}-${service_name}" \
--d ${TEAM}/${service_name}
+ --name "${TEAM}-${service_name}" \
+ -d ${TEAM}/${service_name}
 
 

@@ -21,6 +21,7 @@ on ports ${ZOOKEEPER_PORT} and ${CONSUMER_PORT}
 #for OSX
 LOCAL_IP=`ipconfig getifaddr en0`
 #for other
+NETWORK_INTERFACE="ens33"
 if [ -z ${LOCAL_IP} ]; then LOCAL_IP=`ip -f inet -o addr show ${NETWORK_INTERFACE}|cut -d\  -f 7 | cut -d/ -f 1`;fi
 
 echo ${LOCAL_IP}

@@ -21,6 +21,7 @@ project_dir="$(dirname $(cd -P -- "$(dirname -- "$0")" && pwd -P))"
 echo Starting ${service_name} Docker image for ${TEAM} from ${project_dir} on Port:${RESERVATION_APP_PORT}
 
 docker run --link team6-${message_service}:${message_service}    \
+--env MESSAGING_SERVICE="10.162.231.12:2181" \
 --link team6-${reservation_service}:${reservation_service} -e RESERVATION_SERVICE="http://${reservation_service}:${reservation_service_port}" \
 --link team6-${server_service}:${server_service} -e SERVER_SERVICE="http://${server_service}:${server_service_port}" \
 -p ${RESERVATION_APP_PORT}:${default_port} \

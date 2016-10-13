@@ -1,0 +1,63 @@
+version: '2'
+
+services:
+  messaging-service:
+    build: messaging-service
+    image: team6/messaging-service
+    container_name: team6-messaging-service
+    ports:
+      - 2181:2181
+      - 9092:9092
+
+  server-service:
+    build: server-service
+    image: team6/server-service
+    container_name: team6-server-service
+    depends_on:
+      - messaging-service
+    links:
+      - messaging-service
+    environment:
+      ADVERTISED_HOST: ${SERVER_SERVICE_LOCAL_IP}
+    ports:
+      - 8091:8091
+
+  approval-service:
+    build: approval-service
+    image: team6/approval-service
+    container_name: team6-approval-service
+    depends_on:
+      - messaging-service
+    links:
+      - messaging-service
+    ports:
+      - 8092:8092
+
+  reservation-service:
+    build: reservation-service
+    image: team6/reservation-service
+    container_name: team6-reservation-service
+    links:
+      - server-service
+      - approval-service
+    environment:
+      SERVER_SERVICE: "http://server-service:8091"
+      APPROVAL_SERVICE: "http://approval-service:8092"
+    ports:
+      - 8093:8093
+
+  reservation-app:
+    build: reservation-app
+    image: team6/reservation-app
+    container_name: team6-reservation-app
+    depends_on:
+      - messaging-service
+    links:
+      - messaging-service
+      - reservation-service
+      - server-service
+    environment:
+      RESERVATION_SERVICE: "http://reservation-service:8093"
+      SERVER_SERVICE: "http://server-service:8091"
+    ports:
+      - 8090:8090
