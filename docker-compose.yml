@@ -18,6 +18,7 @@ services:
     links:
       - messaging-service
     environment:
+      MESSAGING_SERVICE: "10.162.231.12:2181"
       ADVERTISED_HOST: ${SERVER_SERVICE_LOCAL_IP}
     ports:
       - 8091:8091
@@ -30,6 +31,8 @@ services:
       - messaging-service
     links:
       - messaging-service
+    environment:
+      MESSAGING_SERVICE: "10.162.231.12:2181"
     ports:
       - 8092:8092
 
@@ -57,6 +60,7 @@ services:
       - reservation-service
       - server-service
     environment:
+      MESSAGING_SERVICE: "10.162.231.12:2181"
       RESERVATION_SERVICE: "http://reservation-service:8093"
       SERVER_SERVICE: "http://server-service:8091"
     ports:

@@ -51,8 +51,10 @@ router.post('/', function (req, res) {
     messagingService.postMessage(config.TOPIC_APPROVAL_REQUEST, newApproval)
         .then(
             function (data) {
-                console.log('Finished Posting New Reservation' + JSON.stringify(data));
-                res.send(data);
+
+                newApproval.response = data;
+                console.log('Finished Posting New Reservation' + JSON.stringify(newApproval));
+                res.send(newApproval);
             },
             function (error) {
                 console.log('ERROR Posting New Reservation:' + JSON.stringify(newApproval) + JSON.stringify(error));
@@ -69,8 +71,10 @@ function convertReservationToApproval(newReservation) {
         "name": newReservation.server_name,
         "date": resDate.format('YYYYMMDD'),
         "user": newReservation.name,
-        "email": newReservation.name + '@' + 'test.net'
-    };
+        "email": newReservation.name + '@' + 'test.net',
+        "approved": false  // initialize it as false
+
+};
 }
 
 module.exports = router;
