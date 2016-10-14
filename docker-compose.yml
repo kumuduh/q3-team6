@@ -65,3 +65,20 @@ services:
       SERVER_SERVICE: "http://server-service:8091"
     ports:
       - 8090:8090
+
+  testing-service:
+    build: testing-service
+    image: team6/testing-service
+    container_name: team6-testing-service
+    links:
+      - approval-service
+      - server-service
+      - reservation-service
+      - reservation-app
+    environment:
+      RS_HOST: "reservation-app"
+      RESERVATION_HOST: "reservation-service"
+      SERVER_HOST: "server-service"
+      APPROVAL_HOST: "approval-service"
+    ports:
+      - 3000:3000

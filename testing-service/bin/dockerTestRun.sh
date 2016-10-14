@@ -12,6 +12,5 @@ project_dir="$(dirname $(cd -P -- "$(dirname -- "$0")" && pwd -P))"
 echo Starting ${service_name} Docker image for ${TEAM} from ${project_dir}
 
 docker run  \
---link team6-${reservation_app}:${reservation_app} \
 --name "${TEAM}-${service_name}" \
 -d ${TEAM}/${service_name}
