@@ -1,4 +1,4 @@
-FROM uwehale/alpine-node-bower-git:latest
+FROM uwehale/alpine-node-bower-git-python:latest
 MAINTAINER Uwe hale "uwehale@gmail.com"
 
 

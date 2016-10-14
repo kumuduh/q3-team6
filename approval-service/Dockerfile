@@ -1,14 +1,11 @@
-FROM uwehale/alpine-node-bower-git:latest
+FROM uwehale/alpine-node-bower-git-python:latest
 MAINTAINER Uwe hale "uwehale@gmail.com"
 
 
 WORKDIR /home/app
-
 COPY . /home/app
 
-RUN npm run clean
-
-RUN npm install
+RUN npm run clean && npm install
 
 EXPOSE 8092
 
