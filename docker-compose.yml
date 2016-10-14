@@ -2,15 +2,21 @@ version: '2'
 
 services:
   messaging-service:
-    build: messaging-service
+    build: ./messaging-service
+    hostname: messaging-service
     image: team6/messaging-service
     container_name: team6-messaging-service
+    environment:
+         ADVERTISED_HOST: messaging-service
+         ADVERTISED_PORT: 9092
+         TOPICS: TEAM6_SERVERCREATE_REQUEST, TEAM6_APPROVAL_REQUEST
     ports:
       - 2181:2181
       - 9092:9092
 
   server-service:
-    build: server-service
+    build: ./server-service
+    hostname: server-service
     image: team6/server-service
     container_name: team6-server-service
     depends_on:
@@ -19,12 +25,12 @@ services:
       - messaging-service
     environment:
       MESSAGING_SERVICE: "10.162.231.12:2181"
-      ADVERTISED_HOST: ${SERVER_SERVICE_LOCAL_IP}
     ports:
       - 8091:8091
 
   approval-service:
-    build: approval-service
+    build: ./approval-service
+    hostname: approval-service
     image: team6/approval-service
     container_name: team6-approval-service
     depends_on:
@@ -37,7 +43,8 @@ services:
       - 8092:8092
 
   reservation-service:
-    build: reservation-service
+    build: ./reservation-service
+    hostname: reservation-service
     image: team6/reservation-service
     container_name: team6-reservation-service
     links:
@@ -50,7 +57,8 @@ services:
       - 8093:8093
 
   reservation-app:
-    build: reservation-app
+    build: ./reservation-app
+    hostname: reservation-app
     image: team6/reservation-app
     container_name: team6-reservation-app
     depends_on:
@@ -67,9 +75,15 @@ services:
       - 8090:8090
 
   testing-service:
-    build: testing-service
+    build: ./testing-service
+    hostname: testing-service
     image: team6/testing-service
     container_name: team6-testing-service
+    depends_on:
+       - approval-service
+       - server-service
+       - reservation-service
+       - reservation-app
     links:
       - approval-service
       - server-service

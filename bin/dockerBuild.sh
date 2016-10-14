@@ -11,4 +11,6 @@ ${project_dir}/messaging-service/bin/dockerServiceBuild.sh
 
 ${project_dir}/reservation-app/bin/dockerAppBuild.sh
 
+${project_dir}/testing-service/bin/dockerTestBuild.sh
+
 
