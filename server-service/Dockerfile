@@ -12,5 +12,5 @@ RUN npm install
 
 EXPOSE 8091
 
-CMD [ "npm", "start"]
+CMD [ "/home/app/bin/startWait.sh", "npm", "start"]
 

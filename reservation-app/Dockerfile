@@ -16,5 +16,4 @@ RUN npm run client
 
 EXPOSE 8081
 
-CMD [ "npm", "run", "server"]
-
+CMD [ "/home/app/bin/startWait.sh", "npm", "run", "server"]
